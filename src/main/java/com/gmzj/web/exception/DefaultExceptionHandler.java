@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gmzj.except.BusinessException;
+import com.gmzj.web.exception.BusinessException;
 
 @ControllerAdvice
 public class DefaultExceptionHandler {

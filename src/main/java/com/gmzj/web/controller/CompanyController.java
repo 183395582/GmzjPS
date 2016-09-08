@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gmzj.entity.Company;
 import com.gmzj.entity.Page;
-import com.gmzj.except.BusinessException;
+import com.gmzj.web.exception.BusinessException;
 import com.gmzj.service.CompanyService;
 
 @Controller
