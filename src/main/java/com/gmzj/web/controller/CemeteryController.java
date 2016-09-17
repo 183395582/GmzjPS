@@ -49,9 +49,9 @@ public class CemeteryController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateForm(Model model) {
 		setCommonData(model);
-		model.addAttribute("company", new Cemetery());
+		model.addAttribute("cemetery", new Cemetery());
 		model.addAttribute("op", "公司信息新增");
-		return "company/edit";
+		return "cemetery/edit";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -64,9 +64,9 @@ public class CemeteryController {
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") int id, Model model) throws Exception {
 		setCommonData(model);
-		model.addAttribute("cemetery", service.findCompanyByKey(id));
+		model.addAttribute("cemetery", service.findCemeteryByKey(id));
 		model.addAttribute("op", "公司信息修改");
-		return "company/edit";
+		return "cemetery/edit";
 	}
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
@@ -74,7 +74,7 @@ public class CemeteryController {
 		int num = service.update(cemetery);
 		if (num != 1) throw new BusinessException("修改失败");
 		model.addAttribute("msg", "修改成功");
-		return "company/edit";
+		return "cemetery/edit";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)

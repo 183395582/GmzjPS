@@ -60,10 +60,10 @@
 									<form:input path="score" class="form-control pull-left"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="ranking">评分排名：</label>
+									<label for="average">评分排名：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="ranking" class="form-control"/>
+									<form:input path="average" class="form-control"/>
 								</div>
 							</div>
 							<div class="row">
