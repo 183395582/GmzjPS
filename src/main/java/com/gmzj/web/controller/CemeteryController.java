@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gmzj.entity.Company;
+import com.gmzj.entity.Cemetery;
 import com.gmzj.entity.Page;
 import com.gmzj.web.exception.BusinessException;
-import com.gmzj.service.CompanyService;
+import com.gmzj.service.CemeteryService;
 
 @Controller
 @RequestMapping("/company")
-public class CompanyController {
+public class CemeteryController {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass()); 
 
 	@Autowired
-	private CompanyService service;
+	private CemeteryService service;
 
 	/**
 	 * 初始化jsp中select选项
@@ -32,14 +32,14 @@ public class CompanyController {
 	 */
 	@ModelAttribute
 	public void init(Model model) {
-		model.addAttribute("stats", Company.ComStat.values());
-		model.addAttribute("types", Company.ComType.values());
+		model.addAttribute("stats", Cemetery.ComStat.values());
+		model.addAttribute("types", Cemetery.ComType.values());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, Page page, Company company) throws Exception {
+	public String list(Model model, Page page, Cemetery company) throws Exception {
 		page.setParm(company);
-		List<Company> list = service.listPage(page);
+		List<Cemetery> list = service.listPage(page);
 		model.addAttribute("contentModel", list);
 		model.addAttribute("page", page);
 		model.addAttribute("searchModel", company);
@@ -49,13 +49,13 @@ public class CompanyController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateForm(Model model) {
 		setCommonData(model);
-		model.addAttribute("company", new Company());
+		model.addAttribute("company", new Cemetery());
 		model.addAttribute("op", "公司信息新增");
 		return "company/edit";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String create(Company company, RedirectAttributes redirectAttributes) throws Exception {
+	public String create(Cemetery company, RedirectAttributes redirectAttributes) throws Exception {
 		service.insert(company);
 		redirectAttributes.addFlashAttribute("msg", "新增成功");
 		return "redirect:/company/";
@@ -70,7 +70,7 @@ public class CompanyController {
 	}
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-	public String update(Company company, Model model) throws Exception {
+	public String update(Cemetery company, Model model) throws Exception {
 		int num = service.update(company);
 		if (num != 1) throw new BusinessException("修改失败");
 		model.addAttribute("msg", "修改成功");
