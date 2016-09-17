@@ -63,8 +63,8 @@
 										<td>${item.city}-${item.dist }</td>
 										<td>${item.statDescribe }</td>
 										<td>
-											<a href="<%=basePath%>company/${item.id }/update" ><li class="fa fa-edit"></li>编辑</a>&nbsp;&nbsp;
-											<a herf="#" onClick="javascript:confirm('确认要删除该内容?'); location='<%=basePath%>company/delete?id=${item.id }'"><li class="fa fa-trash-o"></li>删除</a>
+											<a href="<%=basePath%>cemetery/${item.id }/update" ><li class="fa fa-edit"></li>编辑</a>&nbsp;&nbsp;
+											<a herf="#" onClick="javascript:confirm('确认要删除该内容?'); location='<%=basePath%>cemetery/delete?id=${item.id }'"><li class="fa fa-trash-o"></li>删除</a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -86,7 +86,7 @@
          $("#data-table").tableManaged();
          $(".table-toolbar").toolbarLite({
              items: [
-                 { link: true, display: "新增", css: "fa fa-plus", showIcon: true, url: "<%=basePath%>company/add"}
+                 { link: true, display: "新增", css: "fa fa-plus", showIcon: true, url: "<%=basePath%>cemetery/add"}
              ]
          });
          $(".toolbar").addClass("col-md-4");

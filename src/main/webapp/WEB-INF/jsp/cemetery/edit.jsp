@@ -36,7 +36,7 @@
 				</div>
 				<div class="box-body">
 					<div class="box-body big">
-						<form:form id="editform" modelAttribute="company" class="form-horizontal" method="POST">
+						<form:form id="editform" modelAttribute="cemetery" class="form-horizontal" method="POST">
 							<form:hidden path="id"/>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
@@ -192,7 +192,7 @@
 								</div>
 								<div class="col-md-3">
 									<input name="input" type="button" id="show" value="拖选" class="btn" onclick="showMapWindow();" />
-									<span id="span" style="color: red;">${company.coordinate}</span>
+									<span id="span" style="color: red;">${cemetery.coordinate}</span>
 									<form:hidden path="coordinate" />
 								</div>
 							</div>
@@ -200,7 +200,7 @@
 							<div class="row">
 								<div class="col-md-offset-9">
 									<button type="submit" class="btn btn-success">保存</button>
-									<a class="btn btn-primary" href="<%=basePath%>/company/" target="content" role="button">返回</a>
+									<a class="btn btn-primary" href="<%=basePath%>/cemetery/" target="content" role="button">返回</a>
 								</div>
 							</div>
 							<div class="row">
@@ -222,9 +222,9 @@
 <script type="text/javascript">
 $(function(){
 	$("#city").citySelect({
-		prov:"${company.prov}", 
-		city:"${company.city}",
-		dist:"${company.dist}",
+		prov:"${cemetery.prov}", 
+		city:"${cemetery.city}",
+		dist:"${cemetery.dist}",
 		nodata:"none",
 		required:false
 	});

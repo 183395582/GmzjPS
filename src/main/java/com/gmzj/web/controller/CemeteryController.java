@@ -19,7 +19,7 @@ import com.gmzj.web.exception.BusinessException;
 import com.gmzj.service.CemeteryService;
 
 @Controller
-@RequestMapping("/company")
+@RequestMapping("/cemetery")
 public class CemeteryController {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass()); 
 
@@ -37,13 +37,13 @@ public class CemeteryController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, Page page, Cemetery company) throws Exception {
-		page.setParm(company);
+	public String list(Model model, Page page, Cemetery cemetery) throws Exception {
+		page.setParm(cemetery);
 		List<Cemetery> list = service.listPage(page);
 		model.addAttribute("contentModel", list);
 		model.addAttribute("page", page);
-		model.addAttribute("searchModel", company);
-		return "company/list";
+		model.addAttribute("searchModel", cemetery);
+		return "cemetery/list";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -55,23 +55,23 @@ public class CemeteryController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String create(Cemetery company, RedirectAttributes redirectAttributes) throws Exception {
-		service.insert(company);
+	public String create(Cemetery cemetery, RedirectAttributes redirectAttributes) throws Exception {
+		service.insert(cemetery);
 		redirectAttributes.addFlashAttribute("msg", "新增成功");
-		return "redirect:/company/";
+		return "redirect:/cemetery/";
 	}
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") int id, Model model) throws Exception {
 		setCommonData(model);
-		model.addAttribute("company", service.findCompanyByKey(id));
+		model.addAttribute("cemetery", service.findCompanyByKey(id));
 		model.addAttribute("op", "公司信息修改");
 		return "company/edit";
 	}
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-	public String update(Cemetery company, Model model) throws Exception {
-		int num = service.update(company);
+	public String update(Cemetery cemetery, Model model) throws Exception {
+		int num = service.update(cemetery);
 		if (num != 1) throw new BusinessException("修改失败");
 		model.addAttribute("msg", "修改成功");
 		return "company/edit";
@@ -83,7 +83,7 @@ public class CemeteryController {
 		int num = 0;
 		if (num != 1) throw new BusinessException("删除失败");
 		model.addAttribute("msg", "删除成功");
-		return "redirect:/company/";
+		return "redirect:/cemetery/";
 	}
 
 	private void setCommonData(Model model) {
