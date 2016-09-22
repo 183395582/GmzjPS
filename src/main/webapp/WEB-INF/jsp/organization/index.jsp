@@ -13,7 +13,7 @@
         src="${pageContext.request.contextPath}/organization/tree" frameborder="0" scrolling="auto"></iframe>
 
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.layout-latest.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/plugins/jquery.layout-latest.min.js"></script>
 <script>
     $(function () {
         $(document).ready(function () {

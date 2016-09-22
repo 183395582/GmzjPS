@@ -50,7 +50,7 @@
 
 	</div>
 
-	<script src="${pageContext.request.contextPath}/static/js/jquery.layout-latest.min.js"></script>
+	<script src="${pageContext.request.contextPath}/static/plugins/jquery.layout-latest.min.js"></script>
 	<script>
 		$(function() {
 			$(document).ready(function() {

@@ -108,7 +108,7 @@
          $(".tool_box").addClass("col-md-3");
       });
 	   	function picCustom() {
-	   		var frameSrc = "<%=basePath%>/picpage";
+	   		var frameSrc = "<%=basePath%>/pic/picpage";
 	   	    $("#picIframe").attr("src", frameSrc);
 	   	    $('#picModal').modal({ show: true, backdrop: 'static' });
 	   	};
