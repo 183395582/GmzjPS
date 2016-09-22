@@ -148,6 +148,14 @@
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
+									<label for="characteristic">看墓专车：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="characteristic" class="form-control pull-left"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
 									<label for="price">园区介绍：</label>
 								</div>
 								<div class="col-md-10">
@@ -307,6 +315,14 @@
 							</div>
 							<div class="row" style="background-color:#F5F5F5;">
 									<label for="name">优惠活动</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right">
+									<label for="preferential">优惠政策：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="preferential" class="form-control"/>
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right">
