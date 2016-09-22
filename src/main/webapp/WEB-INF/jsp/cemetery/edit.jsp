@@ -139,6 +139,12 @@
 								<div class="col-md-3">
 									<form:input path="price" class="form-control pull-left"/>
 								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="slogan">咨询热线：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="slogan" class="form-control"/>
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
