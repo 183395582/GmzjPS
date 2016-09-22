@@ -3,7 +3,6 @@ package com.gmzj.web.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,12 @@ import com.gmzj.entity.Pic;
 import com.gmzj.entity.PicExample;
 import com.gmzj.entity.PicExample.Criteria;
 import com.gmzj.service.PicService;
+import com.gmzj.util.Const;
+import com.gmzj.util.DateUtil;
+import com.gmzj.util.FileUpload;
 import com.gmzj.util.JsonResult;
+import com.gmzj.util.PathUtil;
+import com.gmzj.util.UuidUtil;
 
 
 @Controller
@@ -42,13 +46,12 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	@Autowired
 	private PicService picService;
 
-	@RequestMapping(value="picpage.htm")
-	public String  openPicPage(@RequestParam("resNo") String resNo,
+	@RequestMapping(value="picpage")
+	public String  openPicPage(@RequestParam("resId") String resId,
 			@RequestParam("resName") String resName,
 			@RequestParam("resType") String resType,
-			Model model) throws UnsupportedEncodingException
-    {  
-		model.addAttribute("resNo", resNo);
+			Model model) throws UnsupportedEncodingException {  
+		model.addAttribute("resId", resId);
 		//处理中文乱码
 		logger.debug(String.format("PicController 资源名称-%s", resName));
 		model.addAttribute("resName",new String(resName.getBytes("iso-8859-1"),"utf-8"));
@@ -61,7 +64,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="findPic.htm", method = RequestMethod.POST)
+	@RequestMapping(value="findPic", method = RequestMethod.POST)
 	@ResponseBody
 	public Object ajaxfindPic(Page page, Pic pic) {
 		page.setParm(pic);
@@ -79,7 +82,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 * @param pic
 	 * @return
 	 */
-	@RequestMapping(value="addPic.htm", method = RequestMethod.POST)
+	@RequestMapping(value="addPic", method = RequestMethod.POST)
 	@ResponseBody
 	public  Object ajaxaddPic(Pic pic, @RequestParam(value = "files", required = true) MultipartFile[] files) {  
 		StringBuffer path = new StringBuffer();
@@ -89,7 +92,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 		try{
 			for(MultipartFile file:files){
 				if(!file.isEmpty()){
-					String fileurl = resourceConvertURL(path.toString(), file);
+					String fileurl = resourceConvertURL(file);
 					PicExample example = new PicExample();
 					Criteria criteria = example.createCriteria();
 					criteria.andResTypeEqualTo(pic.getResType());
@@ -118,14 +121,14 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 * @param pic
 	 * @return
 	 */
-	@RequestMapping(value="addPic4CKEditor.htm", method = RequestMethod.POST)
+	@RequestMapping(value="addPic4CKEditor", method = RequestMethod.POST)
 	@ResponseBody
 	public void ajaxaddPic4CKEditor(@RequestParam("upload") MultipartFile multipartFile,
 			HttpServletRequest request,HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 		
-		String fileurl = resourceConvertURL("", multipartFile);
+		String fileurl = resourceConvertURL(multipartFile);
 		logger.debug("快照图片上传srcfile{}", fileurl);
 		String CKEditorFuncNum = request.getParameter("CKEditorFuncNum");
 		PrintWriter out = null;
@@ -147,7 +150,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 * @param pic
 	 * @return
 	 */
-	@RequestMapping(value="addLinePic.htm", method = RequestMethod.POST)
+	@RequestMapping(value="addLinePic", method = RequestMethod.POST)
 	public void uploadFile(@RequestParam("upload") 
 			MultipartFile file,
 			HttpServletRequest request,
@@ -159,7 +162,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 		path.append("/").append("line").append("/");
 		logger.debug("图片path{}", path.toString());
 
-		String fileurl = resourceConvertURL(path.toString(), file);
+		String fileurl = resourceConvertURL(file);
 		logger.debug("图片srcfile{}", fileurl);
 
 		response.setContentType("text/html;charset=UTF-8");
@@ -182,7 +185,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 * @param scenic
 	 * @return
 	 */
-	@RequestMapping(value="delPic.htm", method = RequestMethod.POST)
+	@RequestMapping(value="delPic", method = RequestMethod.POST)
 	@ResponseBody
 	public Object ajaxdelPic(@RequestParam(value = "index") int id, String srcfile) {  
 		try{
@@ -192,14 +195,13 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 			return JsonResult.jsonError("删除失败");
 		}
 		// 尝试删除资源服务器的资源
-		deleteResourceByURL(srcfile);
 		return JsonResult.jsonOk();
     }
 	
 	/**
 	 * 修改图片的显示顺序
 	 */
-	@RequestMapping(value="updateSeqs.htm", method = RequestMethod.POST)
+	@RequestMapping(value="updateSeqs", method = RequestMethod.POST)
 	@ResponseBody
 	public Object updatePicsSeq(List<Pic> piclist)
 	{
@@ -209,5 +211,16 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 			return JsonResult.jsonError(e.getMessage());
 		}
 		return JsonResult.jsonOk();
+	}
+	
+	private String resourceConvertURL(MultipartFile file){
+		String  ffile = DateUtil.getDays(), fileName = "";
+		if (null != file && !file.isEmpty()) {
+			String filePath = Const.FILEPATHIMG + ffile;		//文件上传路径
+			fileName = FileUpload.fileUp(file, filePath, UuidUtil.get32UUID());				//执行上传
+		}else{
+			System.out.println("上传失败");
+		}
+		return ffile + "/" + fileName;
 	}
 }
