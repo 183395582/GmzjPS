@@ -38,12 +38,31 @@
 					<div class="box-body big">
 						<form:form id="editform" modelAttribute="cemetery" class="form-horizontal" method="POST">
 							<form:hidden path="id"/>
+							
+							<div class="row" style="background-color:#F5F5F5;">
+									<label for="name">基本信息</label>
+							</div>
+							
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="name">公司名称：</label>
+									<label for="name">园区名称：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="name" class="form-control pull-left" placeholder="公司名称"/>
+									<form:input path="name" class="form-control pull-left" placeholder="公墓名称"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="status">状态：</label>
+								</div>
+								<div class="col-md-3">
+									<form:select path="status" items="${stats}" itemLabel="name" itemValue="index" class="form-control" styele="overflow: hidden;"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right">
+									<label for="approvalDep">审批部门：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="approvalDep" class="form-control"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
 									<label for="type">经营类型：</label>
@@ -54,52 +73,10 @@
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="score">评分：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="score" class="form-control pull-left"/>
-								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="average">评分排名：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="average" class="form-control"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2" style="text-align: right;">
-									<label for="price">参考价格：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="price" class="form-control pull-left"/>
-								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="status">状态：</label>
-								</div>
-								<div class="col-md-3">
-									<form:select path="status" items="${stats}" itemLabel="name" itemValue="index" class="form-control" styele="overflow: hidden;"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2" style="text-align: right;">
-									<label for="address">地址：</label>
+									<label for="address">园区地址：</label>
 								</div>
 								<div class="col-md-3">
 									<form:input path="address" class="form-control pull-left"/>
-								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="slogan">服务口号：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="slogan" class="form-control"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2" style="text-align: right;">
-									<label for="scale">规模：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="scale" class="form-control pull-left"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
 									<label for="ranking">所属地区：</label>
@@ -126,69 +103,58 @@
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="viewNum">查看人数：</label>
+									<label for="scale">园区规模：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="viewNum" class="form-control pull-left"/>
+									<form:input path="scale" class="form-control pull-left"/>
 								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="approvalDep">审批部门：</label>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right;">
+									<label for="characteristic">墓穴数量：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="approvalDep" class="form-control"/>
+									<form:input path="characteristic" class="form-control pull-left"/>
 								</div>
+								
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="characteristic">特色：</label>
+									<label for="characteristic">园区特色：</label>
 								</div>
 								<div class="col-md-3">
 									<form:input path="characteristic" class="form-control pull-left"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="preferential">优惠：</label>
+									<label for="slogan">园区印象：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="preferential" class="form-control"/>
+									<form:input path="slogan" class="form-control"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="authentication">认证标志：</label>
+									<label for="price">参考均价：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="authentication" class="form-control pull-left"/>
-								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="discount">优惠标志：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="discount" class="form-control"/>
+									<form:input path="price" class="form-control pull-left"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="retainAshes">保留骨灰：</label>
+									<label for="price">园区介绍：</label>
 								</div>
-								<div class="col-md-3">
-									<form:input path="retainAshes" class="form-control pull-left"/>
+								<div class="col-md-10">
+									<textarea class="col-md-10" rows="8"></textarea>
 								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right">
 									<label for="imgUrl">首页图片：</label>
 								</div>
 								<div class="col-md-3">
 									<form:input path="imgUrl" class="form-control"/>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2" style="text-align: right;">
-									<label for="introduce">介绍：</label>
-								</div>
-								<div class="col-md-3">
-									<form:input path="introduce" class="form-control pull-left"/>
-								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="coordinate">坐标：</label>
+									<label for="coordinate">园区坐标：</label>
 								</div>
 								<div class="col-md-3">
 									<input name="input" type="button" id="show" value="拖选" class="btn" onclick="showMapWindow();" />
@@ -196,6 +162,160 @@
 									<form:hidden path="coordinate" />
 								</div>
 							</div>
+							
+							<div class="row" style="background-color:#F5F5F5;">
+									<label for="name">客户关注及评分</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2"  style="text-align: right;">
+									<label for="score">总评分：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="score" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="average">总评分排名：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="average" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+									<label for="name">&nbsp;</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="score">风水评分：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="score" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="average">交通评分：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="average" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="score">环境评分：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="score" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="average">服务评分：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="average" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+									<label for="name">&nbsp;</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="viewNum">关注人数：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="viewNum" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="bespeak">预约人数：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="bespeak" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="viewNum">评价人数：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="viewNum" class="form-control pull-left"/>
+								</div>
+								
+							</div>
+							
+							<div class="row" style="background-color:#F5F5F5;">
+									<label for="name">园区提供</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="distance">是否专车接送：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="distance" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="bespeak">是否一对一服务：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="bespeak" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="distance">是否可寄存骨灰盒：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="distance" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="bespeak">是否提供下葬仪式：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="bespeak" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="distance">是否提供清明节班车：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="distance" class="form-control pull-left"/>
+								</div>
+								<div class="col-md-2 col-md-offset-1" style="text-align: right">
+									<label for="bespeak">是否提供免费停车：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="bespeak" class="form-control"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="distance">是否提供休息区：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="distance" class="form-control pull-left"/>
+								</div>
+								
+							</div>
+							
+							<div class="row" style="background-color:#F5F5F5;">
+									<label for="name">认证标志</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right;">
+									<label for="authentication">实地认证：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="authentication" class="form-control pull-left"/>
+								</div>
+							</div>
+							<div class="row" style="background-color:#F5F5F5;">
+									<label for="name">优惠活动</label>
+							</div>
+							<div class="row">
+								<div class="col-md-2" style="text-align: right">
+									<label for="preferential">优惠类型：</label>
+								</div>
+								<div class="col-md-3">
+									<form:input path="preferential" class="form-control"/>
+								</div>
+							</div>
+							
 							<br>
 							<div class="row">
 								<div class="col-md-offset-9">
