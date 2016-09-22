@@ -9,7 +9,7 @@
 <script src="<%=basePath%>static/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=basePath%>static/plugins/bootstrap-select.min.js"></script>
 
-<script src="<%=basePath%>static/js/ie10-viewport-bug-workaround.js"></script>
+<script src="<%=basePath%>static/plugins/ie10-viewport-bug-workaround.js"></script>
 <script src="<%=basePath%>static/plugins/jquery.cityselect.js"></script>
 
 <!--[if IE 6]>
