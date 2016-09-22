@@ -95,10 +95,12 @@
 									<form:input path="distance" class="form-control pull-left"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="bespeak">预约人数：</label>
+									<label for="coordinate">园区坐标：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="bespeak" class="form-control"/>
+									<input name="input" type="button" id="show" value="拖选" class="btn" onclick="showMapWindow();" />
+									<span id="span" style="color: red;">${cemetery.coordinate}</span>
+									<form:hidden path="coordinate" />
 								</div>
 							</div>
 							<div class="row">
@@ -153,14 +155,7 @@
 								<div class="col-md-3">
 									<form:input path="imgUrl" class="form-control"/>
 								</div>
-								<div class="col-md-2 col-md-offset-1" style="text-align: right">
-									<label for="coordinate">园区坐标：</label>
-								</div>
-								<div class="col-md-3">
-									<input name="input" type="button" id="show" value="拖选" class="btn" onclick="showMapWindow();" />
-									<span id="span" style="color: red;">${cemetery.coordinate}</span>
-									<form:hidden path="coordinate" />
-								</div>
+								
 							</div>
 							
 							<div class="row" style="background-color:#F5F5F5;">
