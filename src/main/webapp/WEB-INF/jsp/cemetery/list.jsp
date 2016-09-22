@@ -22,12 +22,6 @@
 		<div class="col-md-12">
 			<!-- BOX -->
 			<div class="box border">
-				<div class="box-title">
-					<h4>
-						<span>公司信息查询</span>
-					</h4>
-					<div class="tools"></div>
-				</div>
 				<div class="box-body">
 					<div class="box-body big">
 						<form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
@@ -63,6 +57,7 @@
 										<td>${item.city}-${item.dist }</td>
 										<td>${item.statDescribe }</td>
 										<td>
+											<a onClick="picCustom();"><li class="fa fa-file-image-o"></li>图片</a>&nbsp;&nbsp;
 											<a href="<%=basePath%>cemetery/${item.id }/update" ><li class="fa fa-edit"></li>编辑</a>&nbsp;&nbsp;
 											<a herf="#" onClick="javascript:confirm('确认要删除该内容?'); location='<%=basePath%>cemetery/delete?id=${item.id }'"><li class="fa fa-trash-o"></li>删除</a>
 										</td>
@@ -80,6 +75,25 @@
 				</div>
 			</div>
 		</div>
+		<!-- 模态框（图片） -->
+		<div class="modal fade" id="picModal" tabindex="-1" role="dialog" aria-labelledby="picModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: auto; height: auto">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title" id="picModalLabel">图片管理</h4>
+					</div>
+					<div class="modal-body">
+						<iframe id="picIframe" width="100%" height="500px" frameborder="0" scrolling="yes"></iframe>
+
+					</div>
+
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+		</div>
 
 	<script type="text/javascript">
    	  $(function() {   
@@ -93,6 +107,11 @@
          $(".toolbar").css("padding", "0px");
          $(".tool_box").addClass("col-md-3");
       });
+	   	function picCustom() {
+	   		var frameSrc = "<%=basePath%>/picpage";
+	   	    $("#picIframe").attr("src", frameSrc);
+	   	    $('#picModal').modal({ show: true, backdrop: 'static' });
+	   	};
    </script>
 	<!-- END JAVASCRIPTS -->
 </body>

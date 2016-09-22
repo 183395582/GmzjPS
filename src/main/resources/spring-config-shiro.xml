@@ -110,7 +110,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/js/** 	= anon
-				/static/img/** 	= anon
+				/static/images/** 	= anon
 				/static/css/** 	= anon
 				/static/plugins/** 	= anon
 				/static/fonts/** 	= anon
