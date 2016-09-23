@@ -186,7 +186,7 @@
 									<label for="average">总评分排名：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="average" class="form-control"/>
+									<%-- <form:input path="average" class="form-control"/> --%>
 								</div>
 							</div>
 							<div class="row">
@@ -197,13 +197,13 @@
 									<label for="score">风水评分：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="score" class="form-control pull-left"/>
+									<form:input path="scoreFs" class="form-control pull-left"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
 									<label for="average">交通评分：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="average" class="form-control"/>
+									<form:input path="scoreJt" class="form-control"/>
 								</div>
 							</div>
 							<div class="row">
@@ -211,13 +211,13 @@
 									<label for="score">环境评分：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="score" class="form-control pull-left"/>
+									<form:input path="scoreHj" class="form-control pull-left"/>
 								</div>
 								<div class="col-md-2 col-md-offset-1" style="text-align: right">
 									<label for="average">服务评分：</label>
 								</div>
 								<div class="col-md-3">
-									<form:input path="average" class="form-control"/>
+									<form:input path="scoreFw" class="form-control"/>
 								</div>
 							</div>
 							<div class="row">
