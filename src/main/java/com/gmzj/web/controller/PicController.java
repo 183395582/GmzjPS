@@ -3,9 +3,7 @@ package com.gmzj.web.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,12 +25,11 @@ import com.gmzj.entity.Page;
 import com.gmzj.entity.Pic;
 import com.gmzj.entity.PicExample;
 import com.gmzj.entity.PicExample.Criteria;
+import com.gmzj.entity.vo.PicListWebRequest;
 import com.gmzj.service.PicService;
 import com.gmzj.util.Const;
-import com.gmzj.util.DateUtil;
 import com.gmzj.util.FileUpload;
 import com.gmzj.util.JsonResult;
-import com.gmzj.util.PathUtil;
 import com.gmzj.util.UuidUtil;
 
 
@@ -46,15 +43,12 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	@Autowired
 	private PicService picService;
 
-	@RequestMapping(value="picpage")
-	public String  openPicPage(@RequestParam("resId") String resId,
-			@RequestParam("resName") String resName,
-			@RequestParam("resType") String resType,
-			Model model) throws UnsupportedEncodingException {  
+	@RequestMapping(value="picPage")
+	public String  openPicPage(@RequestParam("resId") String resId, @RequestParam("resName") String resName,
+			@RequestParam("resType") String resType, Model model) throws UnsupportedEncodingException {   
 		model.addAttribute("resId", resId);
 		//处理中文乱码
-		logger.debug(String.format("PicController 资源名称-%s", resName));
-		model.addAttribute("resName",new String(resName.getBytes("iso-8859-1"),"utf-8"));
+		model.addAttribute("resName", resName);
 		model.addAttribute("resType", resType);
 		return "pic/pic";
     }
@@ -68,13 +62,19 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	@ResponseBody
 	public Object ajaxfindPic(Page page, Pic pic) {
 		page.setParm(pic);
-		List<Pic> list=null;
+		List<Pic> list = null;
 		try {
 			list = picService.listPage(page);
 		}catch(Exception e) {
+			logger.error("分页查询图片失败", e);
 			JsonResult.jsonError(e.getMessage());
 		}
 		return JsonResult.jsonData(list);
+    }
+	
+	@RequestMapping(value="addPage")
+	public String  openAddPage( Model model) throws UnsupportedEncodingException {   
+		return "pic/add";
     }
 	
 	/**
@@ -84,7 +84,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 */
 	@RequestMapping(value="addPic", method = RequestMethod.POST)
 	@ResponseBody
-	public  Object ajaxaddPic(Pic pic, @RequestParam(value = "files", required = true) MultipartFile[] files) {  
+	public Object ajaxAddPic(Pic pic, @RequestParam(value = "files", required = true) MultipartFile[] files) {  
 		StringBuffer path = new StringBuffer();
 		path.append(pic.getResType()).append("/");
 		path.append(pic.getResId()).append("/");
@@ -92,7 +92,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 		try{
 			for(MultipartFile file:files){
 				if(!file.isEmpty()){
-					String fileurl = resourceConvertURL(file);
+					String fileurl = resourceConvertURL(file, pic.getResType(), pic.getResId());
 					PicExample example = new PicExample();
 					Criteria criteria = example.createCriteria();
 					criteria.andResTypeEqualTo(pic.getResType());
@@ -123,12 +123,12 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 */
 	@RequestMapping(value="addPic4CKEditor", method = RequestMethod.POST)
 	@ResponseBody
-	public void ajaxaddPic4CKEditor(@RequestParam("upload") MultipartFile multipartFile,
+	public void ajaxAddPic4CKEditor(Pic pic, @RequestParam("upload") MultipartFile file,
 			HttpServletRequest request,HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 		
-		String fileurl = resourceConvertURL(multipartFile);
+		String fileurl = resourceConvertURL(file, pic.getResType(), pic.getResId());
 		logger.debug("快照图片上传srcfile{}", fileurl);
 		String CKEditorFuncNum = request.getParameter("CKEditorFuncNum");
 		PrintWriter out = null;
@@ -151,18 +151,17 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 * @return
 	 */
 	@RequestMapping(value="addLinePic", method = RequestMethod.POST)
-	public void uploadFile(@RequestParam("upload") 
+	public void uploadFile(Pic pic, @RequestParam("upload") 
 			MultipartFile file,
 			HttpServletRequest request,
-			HttpServletResponse response)
-	{  
+			HttpServletResponse response) {  
 		logger.debug("当前新增图片对象 {}", file);
 
 		StringBuffer path = new StringBuffer();
 		path.append("/").append("line").append("/");
 		logger.debug("图片path{}", path.toString());
 
-		String fileurl = resourceConvertURL(file);
+		String fileurl = resourceConvertURL(file, pic.getResType(), pic.getResId());
 		logger.debug("图片srcfile{}", fileurl);
 
 		response.setContentType("text/html;charset=UTF-8");
@@ -189,7 +188,7 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	@ResponseBody
 	public Object ajaxdelPic(@RequestParam(value = "index") int id, String srcfile) {  
 		try{
-			picService.delete(id);
+			//picService.delete(id);
 		}
 		catch(Exception e){
 			return JsonResult.jsonError("删除失败");
@@ -203,18 +202,25 @@ static Logger logger = LoggerFactory.getLogger(PicController.class);
 	 */
 	@RequestMapping(value="updateSeqs", method = RequestMethod.POST)
 	@ResponseBody
-	public Object updatePicsSeq(List<Pic> piclist)
+	public Object updatePicsSeq(PicListWebRequest req)
 	{
 		try {
-			picService.updateSeqs(piclist);
+			picService.updateSeqs(req.getPiclist());
 		} catch (Exception e) {
 			return JsonResult.jsonError(e.getMessage());
 		}
 		return JsonResult.jsonOk();
 	}
 	
-	private String resourceConvertURL(MultipartFile file){
-		String  ffile = DateUtil.getDays(), fileName = "";
+	/**
+	 * 上传文件
+	 * @param file
+	 * @param type
+	 * @param resId
+	 * @return
+	 */
+	private String resourceConvertURL(MultipartFile file, String type, int resId){
+		String  ffile = type + "/" + resId, fileName = "";
 		if (null != file && !file.isEmpty()) {
 			String filePath = Const.FILEPATHIMG + ffile;		//文件上传路径
 			fileName = FileUpload.fileUp(file, filePath, UuidUtil.get32UUID());				//执行上传

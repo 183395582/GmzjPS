@@ -25,10 +25,6 @@
 	<!-- END PAGE LEVEL SCRIPTS -->
 	
 	<%@ include file="comm/importJs.jsp"%>
-	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script src="<c:url value='static/js/app.js'/>" type="text/javascript"></script>
-	<script src="<c:url value='static/js/account.validate.js'/>" type="text/javascript"></script> 
-	<!-- END PAGE LEVEL SCRIPTS -->
 	
 	<!-- <link rel="shortcut icon" href="favicon.ico" /> -->
 </head>

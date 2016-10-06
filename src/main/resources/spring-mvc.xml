@@ -14,24 +14,17 @@
     <context:property-placeholder location="classpath:*.properties"/>
 
     <!-- 开启controller注解支持 -->
-    <!-- 注意事项请参考：http://jinnianshilongnian.iteye.com/blog/1762632 -->
-    <context:component-scan base-package="com.gmzj.**.web.controller" use-default-filters="false">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Controller"/>
-        <context:include-filter type="annotation"
-                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-    </context:component-scan>
+    <context:component-scan base-package="com.gmzj">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+	
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="false" />
+	</bean>
 
-	<!-- springMVC参数绑定 -->
-    <mvc:annotation-driven>
-        <mvc:argument-resolvers>
-            <bean class="com.gmzj.web.bind.method.CurrentUserMethodArgumentResolver"/>
-	        <bean class="com.gmzj.web.bind.method.RequestJsonParamMethodArgumentResolver"/>  
-        </mvc:argument-resolvers>
-    </mvc:annotation-driven>
-    
     <!-- 默认的注解映射的支持 -->
-    <mvc:annotation-driven validator="validator" conversion-service="conversion-service" />
+    <!-- <mvc:annotation-driven validator="validator" conversion-service="conversion-service" /> -->
     <!-- 数据验证 -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
@@ -59,7 +52,7 @@
     </bean>
     
     <!-- 数据绑定 -->
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
@@ -88,6 +81,13 @@
 				<value>application/json;charset=UTF-8</value>
 			</list>
 		</property>
+	</bean>
+	
+	<!-- 支持上传文件 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="5242880"></property>
+		<property name="maxInMemorySize" value="40960"></property>
 	</bean>
 
     <!-- 控制器异常处理 -->

@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -8,10 +14,14 @@
 <title>后台管理系统</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<script src="static/plugins/handlebars.js"></script>
-<script src="static/plugins/jquery.gridly.js"></script>
-<link href="static/css/jquery.gridly.css" rel="stylesheet" type="text/css" />
-<link href="static/css/jquery.gridly.sample.css" rel="stylesheet" type="text/css" />
+<jsp:include page="../comm/script.jsp" flush="true" />
+<jsp:include page="../comm/css.jsp" flush="true" />
+<script src="<%=basePath %>static/plugins/handlebars.js"></script>
+<script src="<%=basePath %>static/plugins/jquery.gridly.js"></script>
+
+<link href="<%=basePath %>static/css/jquery.gridly.css" rel="stylesheet" type="text/css" />
+<link href="<%=basePath %>static/css/ace.min.css" rel="stylesheet" type="text/css" />
+<link href="<%=basePath %>static/css/jquery.gridly.sample.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<div class="main-container" id="main-container">
@@ -30,7 +40,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<h3><span id="resName">${resName}</span></h3>
-									<input id="resNo" type="hidden" value="${resNo}">
+									<input id="resId" type="hidden" value="${resId}">
 									<input id="resType" type="hidden" value="${resType}">
 								</div>
 							</div>
@@ -42,7 +52,8 @@
 							</div>
 							
 							<div class="row">
-								<div class="col-xs-12" id="image-panel"></div>
+								<div class="col-xs-12" id="image-panel">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -67,12 +78,62 @@
 	</c:if>
 	<script type="text/x-handlebars-template" id="imgTpt">
 		{{#each this}}
-			<div class="imgblock" id="img_wrapper_{{index}}" data-id="{{index}}" data-seq="{{seq}}" data-srcFile="{{srcFile}}">
-				<a class="imgdelete" id="img_a_{{index}}" onclick="deleteImg('img_a_{{index}}')">×</a>
-				<img src="{{srcFile}}">
+			<div class="imgblock" id="img_wrapper_{{id}}" data-id="{{id}}" data-seq="{{seq}}" data-srcFile="{{imgUrl}}">
+				<a class="imgdelete" id="img_a_{{id}}" onclick="deleteImg('img_a_{{id}}', '<%=basePath%>')">×</a>
+				<img src="http://localhost/{{imgUrl}}">
 			</div>
 		{{/each}}
 	</script>
-	<script src="/js/bus/pic/pic.js"></script>
+	<script src="<%=basePath %>static/js/pic/pic.js"></script>
+	<script>
+		function findpics(){
+			var json={};
+			json["resNo"]=$("#resNo").val();
+			json["resType"]=$("#resType").val();
+			$.ajax({
+			     type: 'POST',
+			     url: '<%=basePath%>pic/findPic.htm' ,
+			     data: json,
+			     success: function(data){
+							if(data.result == "ok") {
+								$("#message").text("查询记录成功");
+								showpics(data.data);
+								return true;
+							}
+							else {
+								$("#message").text("查询记录失败:" + data.message );
+								return false;
+							}
+							return false;
+						} ,
+			    dataType: 'json',
+			});
+		}
+		
+		function updateSeqs(param){
+			var url="<%=basePath%>pic/updateSeqs";
+			$.ajax({
+			    type: 'POST',
+			    url:url,
+			    data:param,
+			    success: function(data){
+						if(data.result == "ok"){
+						}
+						else {
+							$("#message").text("修改图片显示顺序失败:" + json.message );
+							return false;
+						}
+						return false;
+					} ,
+			    dataType: 'json',
+			});
+		}
+		//文件上传
+		$("#upfileBtn").on("click", function() {
+			$("#upfileModal").modal({
+			    remote: "<%=basePath%>pic/addPage"
+			});
+		});
+	</script>
 </body>
 </html>

@@ -112,6 +112,7 @@
                 /static/js/** 	= anon
 				/static/images/** 	= anon
 				/static/css/** 	= anon
+				/jsp/** 	= anon
 				/static/plugins/** 	= anon
 				/static/fonts/** 	= anon
                 /login = authc

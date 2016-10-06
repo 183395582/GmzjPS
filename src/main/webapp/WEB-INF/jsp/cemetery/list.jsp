@@ -13,9 +13,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="<c:url value='/static/js/app.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/static/js/jquery.toolbarlite.js?ver=10'/>"></script>
-<script type="text/javascript" src="<c:url value='/static/js/jquery.tableManaged.js'/>"></script>
 </head>
 <body>
 	<div class="row">
@@ -57,7 +54,7 @@
 										<td>${item.city}-${item.dist }</td>
 										<td>${item.statDescribe }</td>
 										<td>
-											<a onClick="picCustom();"><li class="fa fa-file-image-o"></li>图片</a>&nbsp;&nbsp;
+											<a onClick="picCustom('${item.id}', '${item.name}', '01');"><li class="fa fa-file-image-o"></li>图片</a>&nbsp;&nbsp;
 											<a href="<%=basePath%>cemetery/${item.id }/update" ><li class="fa fa-edit"></li>编辑</a>&nbsp;&nbsp;
 											<a herf="#" onClick="javascript:confirm('确认要删除该内容?'); location='<%=basePath%>cemetery/delete?id=${item.id }'"><li class="fa fa-trash-o"></li>删除</a>
 										</td>
@@ -107,8 +104,8 @@
          $(".toolbar").css("padding", "0px");
          $(".tool_box").addClass("col-md-3");
       });
-	   	function picCustom() {
-	   		var frameSrc = "<%=basePath%>/pic/picpage";
+	   	function picCustom(id, resName, resType) {
+	   		var frameSrc = "<%=basePath%>/pic/picPage?resId="+id+"&resName="+resName+"&resType="+resType;
 	   	    $("#picIframe").attr("src", frameSrc);
 	   	    $('#picModal').modal({ show: true, backdrop: 'static' });
 	   	};

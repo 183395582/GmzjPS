@@ -1,7 +1,6 @@
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
 	<link href="<c:url value='static/plugins/font-awesome/css/font-awesome.min.css'/>" rel="stylesheet" type="text/css"/>
 	<link href="<c:url value='static/plugins/bootstrap/css/bootstrap.min.css'/>" rel="stylesheet" type="text/css"/>
-	<link href="<c:url value='static/css/uniform.default.min.css'/>" rel="stylesheet" type="text/css"/>
 	<!-- END GLOBAL MANDATORY STYLES -->
 	
 	<!-- BEGIN THEME STYLES --> 
