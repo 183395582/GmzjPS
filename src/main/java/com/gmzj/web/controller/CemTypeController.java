@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gmzj.util.DateEditor;
-import com.gmzj.entity.Zone;
+import com.gmzj.entity.CemType;
 import com.gmzj.entity.Page;
-import com.gmzj.service.ZoneService;
+import com.gmzj.service.CemTypeService;
 import com.gmzj.web.exception.BusinessException;
 
 @Controller
-@RequestMapping("/zone")
-public class ZoneController {
+@RequestMapping("/cemType")
+public class CemTypeController {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass()); 
 
 	@Autowired
-	private ZoneService service;
+	private CemTypeService service;
 
 	/**
 	 * 初始化jsp中select选项
@@ -38,48 +38,48 @@ public class ZoneController {
 	 */
 	@ModelAttribute
 	public void init(Model model) {
-		//model.addAttribute("stats", Zone.ComStat.values());
+		//model.addAttribute("stats", CemType.ComStat.values());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, Page page, Zone zone) throws Exception {
-		page.setParm(zone);
-		List<Zone> list = service.listPage(page);
+	public String list(Model model, Page page, CemType cemtype) throws Exception {
+		page.setParm(cemtype);
+		List<CemType> list = service.listPage(page);
 		model.addAttribute("contentModel", list);
 		model.addAttribute("page", page);
-		model.addAttribute("searchModel", zone);
-		return "zone/list";
+		model.addAttribute("searchModel", cemtype);
+		return "cemtype/list";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateForm(Model model) {
 		setCommonData(model);
-		model.addAttribute("zone", new Zone());
-		model.addAttribute("op", "园区信息新增");
-		return "zone/edit";
+		model.addAttribute("cemtype", new CemType());
+		model.addAttribute("op", "墓型信息新增");
+		return "cemtype/edit";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String create(Zone zone, RedirectAttributes redirectAttributes) throws Exception {
-		service.insert(zone);
+	public String create(CemType cemtype, RedirectAttributes redirectAttributes) throws Exception {
+		service.insert(cemtype);
 		redirectAttributes.addFlashAttribute("msg", "新增成功");
-		return "redirect:/zone/";
+		return "redirect:/cemtype/";
 	}
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") int id, Model model) throws Exception {
 		setCommonData(model);
-		model.addAttribute("zone", service.findZoneByKey(id));
-		model.addAttribute("op", "园区信息修改");
-		return "zone/edit";
+		model.addAttribute("cemtype", service.findCemTypeByKey(id));
+		model.addAttribute("op", "墓型信息修改");
+		return "cemtype/edit";
 	}
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-	public String update(Zone zone, Model model) throws Exception {
-		int num = service.update(zone);
+	public String update(CemType cemtype, Model model) throws Exception {
+		int num = service.update(cemtype);
 		if (num != 1) throw new BusinessException("修改失败");
 		model.addAttribute("msg", "修改成功");
-		return "zone/edit";
+		return "cemtype/edit";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -88,7 +88,7 @@ public class ZoneController {
 		int num = 0;
 		if (num != 1) throw new BusinessException("删除失败");
 		model.addAttribute("msg", "删除成功");
-		return "redirect:/zone/";
+		return "redirect:/cemtype/";
 	}
 
 	private void setCommonData(Model model) {
