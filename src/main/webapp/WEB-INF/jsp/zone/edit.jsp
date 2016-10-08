@@ -47,11 +47,9 @@
 									<label for="name">所属园区：</label>
 								</div> 
 								<div class="col-md-3" id="city">
-								
-									<form:select path="prov" class="prov"/>
-									<form:select path="city" class="city" disabled="disabled"/>
-									<form:select path="dist" class="dist" disabled="disabled"/>
-									 
+									<select class="prov"></select> 
+									<select class="city"></select>
+									<select class="dist"></select>
 								</div>
 							</div>
 							<div class="row">
