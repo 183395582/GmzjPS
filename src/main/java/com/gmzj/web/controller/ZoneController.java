@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gmzj.util.DateEditor;
+import com.gmzj.entity.Cemetery;
 import com.gmzj.entity.Zone;
 import com.gmzj.entity.Page;
+import com.gmzj.service.CemeteryService;
 import com.gmzj.service.ZoneService;
 import com.gmzj.web.exception.BusinessException;
 
@@ -31,6 +33,8 @@ public class ZoneController {
 
 	@Autowired
 	private ZoneService service;
+	
+	private CemeteryService cemeteryService;
 
 	/**
 	 * 初始化jsp中select选项
@@ -69,8 +73,11 @@ public class ZoneController {
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") int id, Model model) throws Exception {
 		setCommonData(model);
-		model.addAttribute("zone", service.findZoneByKey(id));
+		Zone zone = service.findZoneByKey(id);
+		model.addAttribute("cemetery", cemeteryService.findCemeteryByKey(zone.getCemId()));
+		model.addAttribute("zone", zone);
 		model.addAttribute("op", "园区信息修改");
+				
 		return "zone/edit";
 	}
 
