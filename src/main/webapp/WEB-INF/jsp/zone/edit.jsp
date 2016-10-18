@@ -40,21 +40,27 @@
 							<form:hidden path="id"/>
 							
 							<div class="row" style="background-color:#F5F5F5;">
-									<label for="name">园区信息</label>
+									<label for="info">园区信息</label>
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right;">
-									<label for="name">所属园区：</label>
+									<label for="whe">所属地域：</label>
 								</div> 
 								<div class="col-md-3" id="city">
-									<select class="prov"></select> 
-									<select class="city"></select>
-									<select class="dist"></select>
+									<select class="prov" id="pr" onchange="getCemeteries()"></select> 
+									<select class="city" id="ct" onchange="getCemeteries()"></select>
+									<select class="dist" id="di" onchange="getCemeteries()"></select>
+								</div>
+								<div class="col-md-2" style="text-align: right;">
+									<label for="whegm">所属公墓：</label>
+								</div>
+								<div class="col-md-3">
+									<form:select path="cemId" items="${cemeterys}" itemLabel="name" itemValue="id" class="form-control" styele="overflow: hidden;"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-2" style="text-align: right">
-									<label for="status">园区名称：</label>
+									<label for="name">园区名称：</label>
 								</div>
 								<div class="col-md-3">
 									<form:input path="name" class="form-control pull-left" placeholder="园区名称"/>
@@ -68,7 +74,6 @@
 									<form:textarea class="col-md-10" rows="8" path="description"/>
 								</div>
 							</div>
-							
 							
 							<br>
 							<div class="row">
@@ -104,6 +109,39 @@ $(function(){
 		required:false
 	});
 });
+
+function getCemeteries(){
+	var pr = $("#pr").find("option:selected").val();
+	var ct = $("#ct").find("option:selected").val();
+	var di = $("#di").find("option:selected").val();
+	if(typeof(di)=='undefined'){
+		di='';
+	}
+	alert("prov="+pr+";ct="+ct+";di="+di);
+	$.ajax({
+		type: "POST",
+		url: "<%=basePath%>cemetery/mudata",
+		data: "prov="+pr+"&city="+ct+"&dist="+di,
+		dataType: "json",
+		success: function(data){
+			var h_js = "";
+			if(data.length>0){
+				for(var i=0;i<data.length;i++){
+					alert(data[i].name);
+				}
+			}else{
+				//alert(0);
+			}
+			
+		},
+		error:function(){
+			alert("error");
+		}
+	});
+	
+	
+}
+
 
 </script>
 </body>
