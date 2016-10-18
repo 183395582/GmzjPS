@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gmzj.entity.CemTypeExample;
 import com.gmzj.entity.Cemetery;
+import com.gmzj.entity.CemeteryExample;
+import com.gmzj.entity.CemeteryExample.Criteria;
 import com.gmzj.entity.Page;
 import com.gmzj.web.exception.BusinessException;
 import com.gmzj.service.CemeteryService;
@@ -86,6 +91,27 @@ public class CemeteryController {
 		return "redirect:/cemetery/";
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/mudata", method = RequestMethod.POST)
+	public List ajaxMudata(@RequestParam("prov") String pr,@RequestParam("city") String ct,@RequestParam("dist") String di,
+			Model model) throws Exception{
+		CemeteryExample example = new CemeteryExample();
+		Criteria criteria = example.createCriteria();
+		if(pr!=""){
+			criteria.andProvEqualTo(pr);
+		}
+		if(ct!=""){
+			criteria.andCityEqualTo(ct);
+		}
+		if(di!=""){
+			criteria.andDistEqualTo(di);
+		}
+		
+		List<Cemetery> list = service.findCemeterys(example);
+		return list;
+		
+	}
+	
 	private void setCommonData(Model model) {
 	}
 }

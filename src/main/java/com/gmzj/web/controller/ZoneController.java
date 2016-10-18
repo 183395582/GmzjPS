@@ -1,5 +1,6 @@
 package com.gmzj.web.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gmzj.util.DateEditor;
 import com.gmzj.entity.Cemetery;
+import com.gmzj.entity.CemeteryExample;
 import com.gmzj.entity.Zone;
 import com.gmzj.entity.Page;
 import com.gmzj.service.CemeteryService;
@@ -34,6 +38,7 @@ public class ZoneController {
 	@Autowired
 	private ZoneService service;
 	
+	@Autowired
 	private CemeteryService cemeteryService;
 
 	/**
@@ -41,8 +46,9 @@ public class ZoneController {
 	 * @param model
 	 */
 	@ModelAttribute
-	public void init(Model model) {
+	public void init(Model model) throws Exception {
 		//model.addAttribute("stats", Zone.ComStat.values());
+		model.addAttribute("cemeterys", cemeteryService.findCemeterys(new CemeteryExample()));
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -68,7 +74,7 @@ public class ZoneController {
 		service.insert(zone);
 		redirectAttributes.addFlashAttribute("msg", "新增成功");
 		return "redirect:/zone/";
-	}
+	} 
 
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") int id, Model model) throws Exception {
@@ -88,6 +94,8 @@ public class ZoneController {
 		model.addAttribute("msg", "修改成功");
 		return "zone/edit";
 	}
+	
+
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(int id, Model model) throws Exception {
