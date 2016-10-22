@@ -64,6 +64,7 @@ public class ZoneController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateForm(Model model) {
 		setCommonData(model);
+		model.addAttribute("cemetery", new Cemetery());
 		model.addAttribute("zone", new Zone());
 		model.addAttribute("op", "园区信息新增");
 		return "zone/edit";
@@ -83,7 +84,6 @@ public class ZoneController {
 		model.addAttribute("cemetery", cemeteryService.findCemeteryByKey(zone.getCemId()));
 		model.addAttribute("zone", zone);
 		model.addAttribute("op", "园区信息修改");
-				
 		return "zone/edit";
 	}
 

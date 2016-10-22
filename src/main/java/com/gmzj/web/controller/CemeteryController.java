@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gmzj.entity.CemTypeExample;
 import com.gmzj.entity.Cemetery;
 import com.gmzj.entity.CemeteryExample;
 import com.gmzj.entity.CemeteryExample.Criteria;
 import com.gmzj.entity.Page;
-import com.gmzj.web.exception.BusinessException;
 import com.gmzj.service.CemeteryService;
+import com.gmzj.web.exception.BusinessException;
 
 @Controller
 @RequestMapping("/cemetery")
@@ -97,7 +96,7 @@ public class CemeteryController {
 			Model model) throws Exception{
 		CemeteryExample example = new CemeteryExample();
 		Criteria criteria = example.createCriteria();
-		if(pr!=""){
+		/*if(pr!=""){
 			criteria.andProvEqualTo(pr);
 		}
 		if(ct!=""){
@@ -105,7 +104,7 @@ public class CemeteryController {
 		}
 		if(di!=""){
 			criteria.andDistEqualTo(di);
-		}
+		}*/
 		
 		List<Cemetery> list = service.findCemeterys(example);
 		return list;

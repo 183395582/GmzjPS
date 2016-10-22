@@ -47,9 +47,10 @@
 									<label for="whe">所属地域：</label>
 								</div> 
 								<div class="col-md-3" id="city">
-									<select class="prov" id="pr" onchange="getCemeteries()"></select> 
-									<select class="city" id="ct" onchange="getCemeteries()"></select>
-									<select class="dist" id="di" onchange="getCemeteries()"></select>
+									<input type="text" placeholder="忽略行政区域" name="regionname" id="regionname" 
+													data-key="0086" data-idx="0" data-full="中国" class="form-control inp-search" value="${gmfn:regionFullName(cemetery.regionno) }"/> 
+									<div class="localcity selectCity" id="selectCity"></div>
+									<form:input type="hidden" path="regionno"/>
 								</div>
 								<div class="col-md-2" style="text-align: right;">
 									<label for="whegm">所属公墓：</label>

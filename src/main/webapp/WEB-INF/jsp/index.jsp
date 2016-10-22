@@ -2,10 +2,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <jsp:include page="comm/script.jsp" flush="true" />
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>公墓之家</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout-default-latest.css">
+<link rel="stylesheet" href="<%=basePath%>/static/css/layout-default-latest.css">
 <script src="<c:url value='static/plugins/jquery.min.js'/>" type="text/javascript"></script>
 <script language="javascript">
 	$(function(){
@@ -23,12 +29,12 @@
 <body>
 
 	<iframe name="content" class="ui-layout-center"
-		src="${pageContext.request.contextPath}/welcome" frameborder="0"
+		src="<%=basePath%>/welcome" frameborder="0"
 		scrolling="auto"></iframe>
 	<div class="ui-layout-north">
 		欢迎[
 		<shiro:principal />
-		]登陆公墓之家管理端，<a href="${pageContext.request.contextPath}/logout">退出</a>
+		]登陆公墓之家管理端，<a href="<%=basePath%>logout">退出</a>
 	</div>
 	<div class="ui-layout-south"></div>
 	<div class="ui-layout-west">
@@ -40,7 +46,7 @@
 					<li><div class="txt">${item.name}</div>
 						<ul class="parent">
 							<c:forEach items="${item.subMenu }" var="subMenu" varStatus="j">
-								<li><a href="${pageContext.request.contextPath}/${subMenu.url}" target="content">${subMenu.name }</a></li>
+								<li><a href="<%=basePath%>${subMenu.url}" target="content">${subMenu.name }</a></li>
 							</c:forEach>
 						</ul>
 					</li>
@@ -50,7 +56,7 @@
 
 	</div>
 
-	<script src="${pageContext.request.contextPath}/static/plugins/jquery.layout-latest.min.js"></script>
+	<script src="<%=basePath%>static/plugins/jquery.layout-latest.min.js"></script>
 	<script>
 		$(function() {
 			$(document).ready(function() {

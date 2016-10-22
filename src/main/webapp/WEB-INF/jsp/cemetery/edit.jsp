@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="gmfn" uri="http://www.gmzj.co/tags/functions"%>
+<%@taglib prefix="gmfn" uri="http://www.gmzj.co/tags/functions" %>
 <jsp:include page="../comm/script.jsp" flush="true" />
 <jsp:include page="../comm/css.jsp" flush="true" />
 <jsp:include page="../comm/mapJs.jsp" flush="true" />
@@ -25,7 +25,7 @@
 		}
 	</style>
 </head>
-<body>
+<body ng-app="myApp" ng-controller="myCtrl">
 
     <div class="box border">
 				<div class="box-title">
@@ -82,9 +82,10 @@
 									<label for="ranking">所属地区：</label>
 								</div>
 								<div class="col-md-3" id="city">
-									<form:select path="prov" class="prov"/>
-									<form:select path="city" class="city" disabled="disabled"/>
-									<form:select path="dist" class="dist" disabled="disabled"/>
+									<input type="text" placeholder="忽略行政区域" name="regionname" id="regionname" 
+													data-key="0086" data-idx="0" data-full="中国" class="form-control inp-search" value="${gmfn:regionFullName(cemetery.regionno) }"/> 
+									<div class="localcity selectCity" id="selectCity"></div>
+									<form:input type="hidden" path="regionno"/>
 								</div>
 							</div>
 							<div class="row">
@@ -356,16 +357,22 @@
 				</div>
 				<!-- /BOX -->
 			</div>
-<script type="text/javascript">
-$(function(){
-	$("#city").citySelect({
-		prov:"${cemetery.prov}", 
-		city:"${cemetery.city}",
-		dist:"${cemetery.dist}",
-		nodata:"none",
-		required:false
-	});
-});
-</script>
+	<script type="text/javascript">
+		var localsel = $("#selectCity").localCity({
+			provurl : "<%=basePath%>pub/findRegion",
+			cityurl : "<%=basePath%>pub/findRegion",
+			disturl : "<%=basePath%>pub/findRegion",
+			callback : function (index, key, value, fullkey, fullname) {
+				$("#regionname").val(fullname);
+				$("#regionno").val(key);
+				if (index == 3)
+					$("#selectCity").hide();
+			}
+		});
+		
+		$("#regionname").click(function() {
+			$("#selectCity").show();
+		});
+	</script>
 </body>
 </html>

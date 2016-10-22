@@ -51,7 +51,7 @@
 									<tr class="success">
 										<td>${item.name }</td>
 										<td>${item.typeDescribe }</td>
-										<td>${item.city}-${item.dist }</td>
+										<td>${gmfn:regionFullName(item.regionno) }</td>
 										<td>${item.statDescribe }</td>
 										<td>
 											<a onClick="picCustom('${item.id}', '${item.name}', '01');"><li class="fa fa-file-image-o"></li>图片</a>&nbsp;&nbsp;

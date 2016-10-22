@@ -60,15 +60,8 @@
     <function>
         <description>根据地区编码查询地区全称</description>
         <name>regionFullName</name>
-        <function-class>com.gmzj.web.taglib.CommFunctions</function-class>
+        <function-class>com.gmzj.web.taglib.Functions</function-class>
         <function-signature>java.lang.String regionFullName(java.lang.String)</function-signature>
-    </function>
-
-	<function>
-        <description>根据地区编码查询地区全称</description>
-        <name>regionName</name>
-        <function-class>com.gmzj.web.taglib.CommFunctions</function-class>
-        <function-signature>java.lang.String regionName(java.lang.String)</function-signature>
     </function>
 
 </taglib>

@@ -2,19 +2,24 @@ package com.gmzj.web.taglib;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import com.gmzj.entity.Organization;
 import com.gmzj.entity.Resource;
 import com.gmzj.entity.Role;
 import com.gmzj.service.OrganizationService;
+import com.gmzj.service.RegionMapService;
 import com.gmzj.service.ResourceService;
 import com.gmzj.service.RoleService;
 import com.gmzj.spring.SpringUtils;
 
 public class Functions {
-
-    public static boolean in(Iterable iterable, Object element) {
+	static Logger logger = LoggerFactory.getLogger(Functions.class);
+	
+    @SuppressWarnings("rawtypes")
+	public static boolean in(Iterable iterable, Object element) {
         if(iterable == null) {
             return false;
         }
@@ -107,10 +112,20 @@ public class Functions {
 
         return s.toString();
     }
+    
+    public static String regionFullName(String no) {
+    	try {
+    		return getRegionMapService().findRegionFullName(no);
+    	} catch (Exception e) {
+    		logger.error("查询省市区全名", e);
+    		return "";
+    	}
+    }
 
     private static OrganizationService organizationService;
     private static RoleService roleService;
     private static ResourceService resourceService;
+    private static RegionMapService regionMapService;
 
     public static OrganizationService getOrganizationService() {
         if(organizationService == null) {
@@ -131,6 +146,13 @@ public class Functions {
             resourceService = SpringUtils.getBean(ResourceService.class);
         }
         return resourceService;
+    }
+    
+    public static RegionMapService getRegionMapService() {
+        if(regionMapService == null) {
+        	regionMapService = SpringUtils.getBean(RegionMapService.class);
+        }
+        return regionMapService;
     }
 }
 
