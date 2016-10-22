@@ -47,10 +47,10 @@
 									<label for="whe">所属地域：</label>
 								</div> 
 								<div class="col-md-3" id="city">
-									<input type="text" placeholder="忽略行政区域" name="regionname" id="regionname" 
+									<input type="text" placeholder="忽略行政区域" id="regionname" 
 													data-key="0086" data-idx="0" data-full="中国" class="form-control inp-search" value="${gmfn:regionFullName(cemetery.regionno) }"/> 
 									<div class="localcity selectCity" id="selectCity"></div>
-									<form:input type="hidden" path="regionno"/>
+									<input type="hidden" id="regionno" value="${cemetery.regionno }"/>
 								</div>
 								<div class="col-md-2" style="text-align: right;">
 									<label for="whegm">所属公墓：</label>
@@ -99,51 +99,44 @@
 				</div>
 				<!-- /BOX -->
 			</div>
-<script type="text/javascript">
-
-$(function(){
-	$("#city").citySelect({
-		prov:"${cemetery.prov}",
-		city:"${cemetery.city}",
-		dist:"${cemetery.dist}",
-		nodata:"none",
-		required:false
-	});
-});
-
-function getCemeteries(){
-	var pr = $("#pr").find("option:selected").val();
-	var ct = $("#ct").find("option:selected").val();
-	var di = $("#di").find("option:selected").val();
-	if(typeof(di)=='undefined'){
-		di='';
-	}
-	alert("prov="+pr+";ct="+ct+";di="+di);
-	$.ajax({
-		type: "POST",
-		url: "<%=basePath%>cemetery/mudata",
-		data: "prov="+pr+"&city="+ct+"&dist="+di,
-		dataType: "json",
-		success: function(data){
-			var h_js = "";
-			if(data.length>0){
-				for(var i=0;i<data.length;i++){
-					alert(data[i].name);
+	<script type="text/javascript">
+		var localsel = $("#selectCity").localCity({
+			provurl : "<%=basePath%>pub/findRegion",
+			cityurl : "<%=basePath%>pub/findRegion",
+			disturl : "<%=basePath%>pub/findRegion",
+			callback : function (index, key, value, fullkey, fullname) {
+				$("#regionname").val(fullname);
+				$("#regionno").val(key);
+				if (index == 3){
+					$("#selectCity").hide();
+					getCemeterys($("#regionno").val());
 				}
-			}else{
-				//alert(0);
 			}
-			
-		},
-		error:function(){
-			alert("error");
+		});
+		
+		$("#regionname").click(function() {
+			$("#selectCity").show();
+		});
+		
+		function getCemeterys(regionno){
+			var postParam = "regionno=" + regionno;             
+            $.ajax({    
+                type:'GET',        
+                url:'<%=basePath%>cemetery/getCemeterys',    
+                data:postParam,    
+                cache:false,    
+                dataType:'json',    
+                success:function(res){  
+                    if(res.succflag==0){
+                    	html = '';
+                    	for(var i=0; i<res.data.length; i++){
+                    		html += '<option value="'+res.data[i].no+'">' + res.data[i].name + '</option>';
+                        }
+                    	$("#cemId").html(html);
+                    }                                           
+                }
+            });
 		}
-	});
-	
-	
-}
-
-
-</script>
+	</script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package com.gmzj.web.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -17,17 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gmzj.util.DateEditor;
 import com.gmzj.entity.Cemetery;
 import com.gmzj.entity.CemeteryExample;
-import com.gmzj.entity.Zone;
+import com.gmzj.entity.CemeteryExample.Criteria;
 import com.gmzj.entity.Page;
+import com.gmzj.entity.Zone;
 import com.gmzj.service.CemeteryService;
 import com.gmzj.service.ZoneService;
+import com.gmzj.util.DateEditor;
 import com.gmzj.web.exception.BusinessException;
 
 @Controller
@@ -81,7 +79,14 @@ public class ZoneController {
 	public String showUpdateForm(@PathVariable("id") int id, Model model) throws Exception {
 		setCommonData(model);
 		Zone zone = service.findZoneByKey(id);
-		model.addAttribute("cemetery", cemeteryService.findCemeteryByKey(zone.getCemId()));
+		//园区所属公墓
+		Cemetery cemetery = cemeteryService.findCemeteryByKey(zone.getCemId());
+		model.addAttribute("cemetery", cemetery);
+		//园区所属地区的所有公墓
+		CemeteryExample example = new CemeteryExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andRegionnoEqualTo(cemetery.getRegionno());
+		model.addAttribute("cemeterys", cemeteryService.findCemeterys(example));
 		model.addAttribute("zone", zone);
 		model.addAttribute("op", "园区信息修改");
 		return "zone/edit";

@@ -1,6 +1,8 @@
 package com.gmzj.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +111,19 @@ public class CemeteryController {
 		List<Cemetery> list = service.findCemeterys(example);
 		return list;
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getCemeterys", method = RequestMethod.GET)
+	public Object getCemeterys(String regionno) throws Exception{
+		CemeteryExample example = new CemeteryExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andRegionnoEqualTo(regionno);
+		List<Cemetery> list = service.findCemeterys(example);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("succflag", 0);
+		map.put("data", list);
+		return map;
 	}
 	
 	private void setCommonData(Model model) {

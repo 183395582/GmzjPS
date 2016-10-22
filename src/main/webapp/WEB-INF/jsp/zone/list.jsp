@@ -99,7 +99,7 @@
          $("#data-table").tableManaged();
          $(".table-toolbar").toolbarLite({
              items: [
-                 { link: true, display: "新增", css: "fa fa-plus", showIcon: true, url: "<%=basePath%>cemetery/add"}
+                 { link: true, display: "新增", css: "fa fa-plus", showIcon: true, url: "<%=basePath%>zone/add"}
              ]
          });
          $(".toolbar").addClass("col-md-4");
