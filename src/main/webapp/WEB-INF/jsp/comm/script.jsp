@@ -8,6 +8,8 @@
 <script src="<%=basePath%>static/plugins/jquery.min.js"></script>
 <script src="<%=basePath%>static/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=basePath%>static/plugins/bootstrap-select.min.js"></script>
+<script src="<%=basePath%>static/plugins/jquery.tableManaged.js"></script>
+<script src="<%=basePath%>static/plugins/jquery.toolbarlite.js"></script>
 
 <script src="<%=basePath%>static/plugins/ie10-viewport-bug-workaround.js"></script>
 <%-- <script src="<%=basePath%>static/plugins/jquery.cityselect.js"></script> --%>
