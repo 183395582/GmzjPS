@@ -68,8 +68,8 @@
 										<td>${item.origPrice }</td>
 										<td>${item.stat }</td>
 										<td>
-											<a href="<%=basePath%>cemetery/${item.id }/update" ><li class="fa fa-edit"></li>编辑</a>&nbsp;&nbsp;
-											<a herf="#" onClick="javascript:confirm('确认要删除该内容?'); location='<%=basePath%>cemetery/delete?id=${item.id }'"><li class="fa fa-trash-o"></li>删除</a>
+											<a href="<%=basePath%>cemType/${item.id }/update" ><li class="fa fa-edit"></li>编辑</a>&nbsp;&nbsp;
+											<a herf="#" onClick="javascript:confirm('确认要删除该内容?'); location='<%=basePath%>cemType/delete?id=${item.id }'"><li class="fa fa-trash-o"></li>删除</a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -117,11 +117,11 @@
          $(".toolbar").css("padding", "0px");
          $(".tool_box").addClass("col-md-3");
       });
-	   	function picCustom() {
-	   		var frameSrc = "<%=basePath%>/pic/picpage";
-	   	    $("#picIframe").attr("src", frameSrc);
-	   	    $('#picModal').modal({ show: true, backdrop: 'static' });
-	   	};
+	  //function picCustom() {
+	  // 		var frameSrc = "<%=basePath%>/pic/picpage";
+	  // 	    $("#picIframe").attr("src", frameSrc);
+	  // 	    $('#picModal').modal({ show: true, backdrop: 'static' });
+	  //};
    </script>
 	<!-- END JAVASCRIPTS -->
 </body>
